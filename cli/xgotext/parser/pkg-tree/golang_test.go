@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/leonelquinteros/gotext/cli/xgotext/parser"
+	"github.com/bitvcat/gotext/cli/xgotext/parser"
 )
 
 func TestParsePkgTree(t *testing.T) {
@@ -24,7 +24,8 @@ func TestParsePkgTree(t *testing.T) {
 		t.Error(err)
 	}
 
-	translations := []string{"inside sub package", "My text on 'domain-name' domain", "alias call", "Singular", "SingularVar", "translate package", "translate sub package", "inside dummy",
+	translations := []string{
+		"inside sub package", "My text on 'domain-name' domain", "alias call", "Singular", "SingularVar", "translate package", "translate sub package", "inside dummy",
 		`string with backquotes`, "string ending with EOL\n", "string with\nmultiple\nEOL", `raw string with\nmultiple\nEOL`,
 		`multi
 line

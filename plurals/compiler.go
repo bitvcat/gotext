@@ -1,6 +1,6 @@
 // Original work Copyright (c) 2016 Jonas Obrist (https://github.com/ojii/gettext.go)
 // Modified work Copyright (c) 2018 DeineAgentur UG https://www.deineagentur.com
-// Modified work Copyright (c) 2018-present gotext maintainers (https://github.com/leonelquinteros/gotext)
+// Modified work Copyright (c) 2018-present gotext maintainers (https://github.com/bitvcat/gotext)
 //
 // Licensed under the 3-Clause BSD License. See LICENSE in the project root for license information.
 
@@ -28,8 +28,10 @@ type testToken interface {
 	compile(tokens []string) (test test, err error)
 }
 
-type cmpTestBuilder func(val uint32, flipped bool) test
-type logicTestBuild func(left test, right test) test
+type (
+	cmpTestBuilder func(val uint32, flipped bool) test
+	logicTestBuild func(left test, right test) test
+)
 
 var ternaryToken ternaryStruct
 
@@ -104,6 +106,7 @@ type orStruct struct{}
 func (orStruct) compile(tokens []string) (test test, err error) {
 	return compileLogicTest(tokens, "||", buildOr)
 }
+
 func buildOr(left test, right test) test {
 	return or{left: left, right: right}
 }
@@ -115,6 +118,7 @@ type andStruct struct{}
 func (andStruct) compile(tokens []string) (test test, err error) {
 	return compileLogicTest(tokens, "&&", buildAnd)
 }
+
 func buildAnd(left test, right test) test {
 	return and{left: left, right: right}
 }
@@ -183,7 +187,6 @@ func compileEquality(tokens []string, sep string, builder cmpTestBuilder) (test 
 		return subPipe(split.Left, split.Right, builder, false)
 	}
 	return test, errors.New("equality test must have 'n' as one of the two tests")
-
 }
 
 var eqToken eqStruct
@@ -193,6 +196,7 @@ type eqStruct struct{}
 func (eqStruct) compile(tokens []string) (test test, err error) {
 	return compileEquality(tokens, "==", buildEq)
 }
+
 func buildEq(val uint32, flipped bool) test {
 	return equal{value: val}
 }
@@ -204,6 +208,7 @@ type neqStruct struct{}
 func (neqStruct) compile(tokens []string) (test test, err error) {
 	return compileEquality(tokens, "!=", buildNeq)
 }
+
 func buildNeq(val uint32, flipped bool) test {
 	return notequal{value: val}
 }
@@ -215,6 +220,7 @@ type gtStruct struct{}
 func (gtStruct) compile(tokens []string) (test test, err error) {
 	return compileEquality(tokens, ">", buildGt)
 }
+
 func buildGt(val uint32, flipped bool) test {
 	return gt{value: val, flipped: flipped}
 }
@@ -226,6 +232,7 @@ type gteStruct struct{}
 func (gteStruct) compile(tokens []string) (test test, err error) {
 	return compileEquality(tokens, ">=", buildGte)
 }
+
 func buildGte(val uint32, flipped bool) test {
 	return gte{value: val, flipped: flipped}
 }
@@ -237,6 +244,7 @@ type ltStruct struct{}
 func (ltStruct) compile(tokens []string) (test test, err error) {
 	return compileEquality(tokens, "<", buildLt)
 }
+
 func buildLt(val uint32, flipped bool) test {
 	return lt{value: val, flipped: flipped}
 }
@@ -248,6 +256,7 @@ type lteStruct struct{}
 func (lteStruct) compile(tokens []string) (test test, err error) {
 	return compileEquality(tokens, "<=", buildLte)
 }
+
 func buildLte(val uint32, flipped bool) test {
 	return lte{value: val, flipped: flipped}
 }
@@ -318,7 +327,6 @@ func scan(s string) <-chan match {
 					}
 				}
 			}
-
 		}
 		close(ch)
 	}()

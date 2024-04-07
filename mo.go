@@ -32,7 +32,7 @@ Example:
 
 	import (
 		"fmt"
-		"github.com/leonelquinteros/gotext"
+		"github.com/bitvcat/gotext"
 	)
 
 	func main() {
@@ -45,10 +45,9 @@ Example:
 		// Get Translation
 		fmt.Println(mo.Get("Translate this"))
 	}
-
 */
 type Mo struct {
-	//these three public members are for backwards compatibility. they are just set to the value in the domain
+	// these three public members are for backwards compatibility. they are just set to the value in the domain
 	Headers     HeaderMap
 	Language    string
 	PluralForms string
@@ -56,7 +55,7 @@ type Mo struct {
 	fs          fs.FS
 }
 
-//NewMo should always be used to instantiate a new Mo object
+// NewMo should always be used to instantiate a new Mo object
 func NewMo() *Mo {
 	mo := new(Mo)
 	mo.domain = NewDomain()
@@ -75,7 +74,7 @@ func (mo *Mo) GetDomain() *Domain {
 	return mo.domain
 }
 
-//all of the Get functions are for convenience and aid in backwards compatibility
+// all of the Get functions are for convenience and aid in backwards compatibility
 func (mo *Mo) Get(str string, vars ...interface{}) string {
 	return mo.domain.Get(str, vars...)
 }
@@ -95,12 +94,15 @@ func (mo *Mo) GetNC(str, plural string, n int, ctx string, vars ...interface{}) 
 func (mo *Mo) IsTranslated(str string) bool {
 	return mo.domain.IsTranslated(str)
 }
+
 func (mo *Mo) IsTranslatedN(str string, n int) bool {
 	return mo.domain.IsTranslatedN(str, n)
 }
+
 func (mo *Mo) IsTranslatedC(str, ctx string) bool {
 	return mo.domain.IsTranslatedC(str, ctx)
 }
+
 func (mo *Mo) IsTranslatedNC(str string, n int, ctx string) bool {
 	return mo.domain.IsTranslatedNC(str, n, ctx)
 }

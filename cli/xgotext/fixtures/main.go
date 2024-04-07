@@ -4,14 +4,13 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/leonelquinteros/gotext"
-	alias "github.com/leonelquinteros/gotext"
-	"github.com/leonelquinteros/gotext/cli/xgotext/fixtures/pkg"
+	"github.com/bitvcat/gotext"
+	alias "github.com/bitvcat/gotext"
+	"github.com/bitvcat/gotext/cli/xgotext/fixtures/pkg"
 )
 
 // Fake object with methods similar to gotext
-type Fake struct {
-}
+type Fake struct{}
 
 // Get by id
 func (f Fake) Get(id int) int {
@@ -19,8 +18,7 @@ func (f Fake) Get(id int) int {
 }
 
 // Fake object with same methods as gotext
-type Fake2 struct {
-}
+type Fake2 struct{}
 
 // Get by str
 func (f Fake2) Get(s string) string {

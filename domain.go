@@ -10,7 +10,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/leonelquinteros/gotext/plurals"
+	"github.com/bitvcat/gotext/plurals"
 )
 
 // Domain has all the common functions for dealing with a gettext domain
@@ -40,11 +40,6 @@ type Domain struct {
 	// Sync Mutex
 	trMutex     sync.RWMutex
 	pluralMutex sync.RWMutex
-
-	// Parsing buffers
-	trBuffer  *Translation
-	ctxBuffer string
-	refBuffer string
 }
 
 // Preserve MIMEHeader behaviour, without the canonicalisation
@@ -53,9 +48,11 @@ type HeaderMap map[string][]string
 func (m HeaderMap) Add(key, value string) {
 	m[key] = append(m[key], value)
 }
+
 func (m HeaderMap) Del(key string) {
 	delete(m, key)
 }
+
 func (m HeaderMap) Get(key string) string {
 	if m == nil {
 		return ""
@@ -66,9 +63,11 @@ func (m HeaderMap) Get(key string) string {
 	}
 	return v[0]
 }
+
 func (m HeaderMap) Set(key, value string) {
 	m[key] = []string{value}
 }
+
 func (m HeaderMap) Values(key string) []string {
 	if m == nil {
 		return nil
@@ -516,7 +515,7 @@ func (do *Domain) MarshalText() ([]byte, error) {
 
 	headerKeys := make([]string, 0, len(do.Headers))
 
-	for k, _ := range do.Headers {
+	for k := range do.Headers {
 		headerKeys = append(headerKeys, k)
 	}
 
@@ -623,11 +622,29 @@ func (do *Domain) MarshalText() ([]byte, error) {
 	})
 
 	for _, ref := range references {
+		buf.WriteByte(byte('\n'))
 		trans := ref.trans
-		if len(trans.Refs) > 0 {
-			buf.WriteString("\n\n#: " + strings.Join(trans.Refs, " "))
+		// comment
+		for _, v := range trans.TranslatorComment {
+			buf.WriteString("\n# " + v)
+		}
+		for _, v := range trans.ExtractedComment {
+			buf.WriteString("\n#." + v)
+		}
+		for _, v := range trans.Refs {
+			buf.WriteString("\n#: " + v)
+		}
+
+		if len(trans.Flags) > 0 {
+			buf.WriteString("\n#, " + strings.Join(trans.Flags, ","))
 		} else {
-			buf.WriteByte(byte('\n'))
+			// buf.WriteByte(byte('\n'))
+		}
+		if len(trans.PrevMsgId) > 0 {
+			buf.WriteString("\n#| msgid \"" + EscapeSpecialCharacters(trans.PrevMsgId) + "\"")
+		}
+		if len(trans.PrevMsgContext) > 0 {
+			buf.WriteString("\n#| msgctxt \"" + EscapeSpecialCharacters(trans.PrevMsgContext) + "\"")
 		}
 
 		if ref.context == "" {

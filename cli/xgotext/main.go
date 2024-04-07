@@ -5,9 +5,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/leonelquinteros/gotext/cli/xgotext/parser"
-	"github.com/leonelquinteros/gotext/cli/xgotext/parser/dir"
-	pkg_tree "github.com/leonelquinteros/gotext/cli/xgotext/parser/pkg-tree"
+	"github.com/bitvcat/gotext/cli/xgotext/parser"
+	"github.com/bitvcat/gotext/cli/xgotext/parser/dir"
+	pkg_tree "github.com/bitvcat/gotext/cli/xgotext/parser/pkg-tree"
 )
 
 var (
