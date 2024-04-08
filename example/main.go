@@ -58,4 +58,11 @@ msgstr "world"
 
 	fmt.Println()
 	fmt.Println(po.GetC("你好", "问候2"))
+
+	fmt.Println("-------------")
+	l := gotext.NewLocale("./locales", "en_US")
+	l.AddDomain("default")
+	l.SetRefs("猫", "aaa:123", "bbbb:123")
+	l.MarshalPo()
+	fmt.Println(l.Get("世界"))
 }

@@ -2,6 +2,6 @@ module main
 
 go 1.22.1
 
-//replace github.com/bitvcat/gotext => ..
+require github.com/bitvcat/gotext v0.0.0-00010101000000-000000000000
 
-require github.com/bitvcat/gotext v0.0.0-20240407092311-0a32759f0fd1
+replace github.com/bitvcat/gotext => ..

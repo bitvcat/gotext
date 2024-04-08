@@ -373,6 +373,27 @@ func (l *Locale) IsTranslatedNDC(dom string, str string, n int, ctx string) bool
 	return translator.GetDomain().IsTranslatedNC(str, n, ctx)
 }
 
+// Set source references for a given translation
+func (l *Locale) SetRefs(str string, refs ...string) {
+	l.SetDRefs(l.GetDomain(), str, refs...)
+}
+
+// Set source references for a given translation
+func (l *Locale) SetDRefs(dom string, str string, refs ...string) {
+	l.Lock()
+	defer l.Unlock()
+
+	if l.Domains == nil {
+		return
+	}
+	translator, ok := l.Domains[dom]
+	if !ok {
+		return
+	}
+
+	translator.GetDomain().SetRefs(str, refs)
+}
+
 // LocaleEncoding is used as intermediary storage to encode Locale objects to Gob.
 type LocaleEncoding struct {
 	Path          string
@@ -433,4 +454,30 @@ func (l *Locale) UnmarshalBinary(data []byte) error {
 	}
 
 	return nil
+}
+
+// MarshalPo
+func (l *Locale) MarshalPo() bool {
+	return l.MarshalPoD(l.GetDomain())
+}
+
+func (l *Locale) MarshalPoD(dom string) bool {
+	l.RLock()
+	defer l.RUnlock()
+
+	if l.Domains == nil {
+		return false
+	}
+	translator, ok := l.Domains[dom]
+	if !ok {
+		return false
+	}
+
+	poBytes, err := translator.GetDomain().MarshalText()
+	if err != nil {
+		return false
+	}
+	filename := path.Join(l.path, l.lang, "LC_MESSAGES", dom+".po")
+	err = os.WriteFile(filename, poBytes, 0o644)
+	return err == nil
 }
