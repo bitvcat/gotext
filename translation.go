@@ -68,7 +68,7 @@ func (t *Translation) AddRefs(refs []string) {
 }
 
 func (t *Translation) ClearRefs() {
-	clear(t.Refs)
+	t.Refs = t.Refs[:0]
 	t.dirty = true
 }
 
