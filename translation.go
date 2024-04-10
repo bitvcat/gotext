@@ -54,10 +54,18 @@ func (t *Translation) hasRef(ref string) bool {
 }
 
 func (t *Translation) SetRefs(refs []string) {
+	if len(t.Refs) > 5 {
+		return
+	}
 	for i := 0; i < len(refs); i++ {
 		if !t.hasRef(refs[i]) {
 			t.dirty = true
-			t.Refs = append(t.Refs, refs[i])
+			if len(t.Refs) == 5 {
+				t.Refs = append(t.Refs, "...")
+				break
+			} else {
+				t.Refs = append(t.Refs, refs[i])
+			}
 		}
 	}
 }

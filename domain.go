@@ -631,8 +631,8 @@ func (do *Domain) MarshalText() ([]byte, error) {
 		for _, v := range trans.ExtractedComment {
 			buf.WriteString("\n#." + v)
 		}
-		for _, v := range trans.Refs {
-			buf.WriteString("\n#: " + v)
+		if len(trans.Refs) > 0 {
+			buf.WriteString("\n#: " + strings.Join(trans.Refs, " "))
 		}
 
 		if len(trans.Flags) > 0 {

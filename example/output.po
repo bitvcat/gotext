@@ -24,7 +24,6 @@ msgstr ""
 "hi"
 
 # 测试注释
-#: aaa
-#: bbbb
+#: aaa bbbb
 msgid "世界"
 msgstr "world"
