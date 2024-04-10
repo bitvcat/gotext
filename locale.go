@@ -407,13 +407,13 @@ func (l *Locale) IsTranslatedNDC(dom string, str string, n int, ctx string) bool
 	return translator.GetDomain().IsTranslatedNC(str, n, ctx)
 }
 
-// Set source references for a given translation
-func (l *Locale) SetRefs(str string, refs ...string) {
-	l.SetDRefs(l.GetDomain(), str, refs...)
+// Add source references for a given translation
+func (l *Locale) AddRefs(str string, refs ...string) {
+	l.AddDRefs(l.GetDomain(), str, refs...)
 }
 
-// Set source references for a given translation
-func (l *Locale) SetDRefs(dom string, str string, refs ...string) {
+// Add source references for a given translation
+func (l *Locale) AddDRefs(dom string, str string, refs ...string) {
 	l.Lock()
 	defer l.Unlock()
 
@@ -425,7 +425,47 @@ func (l *Locale) SetDRefs(dom string, str string, refs ...string) {
 		return
 	}
 
-	translator.GetDomain().SetRefs(str, refs)
+	translator.GetDomain().AddRefs(str, refs)
+}
+
+// Clear source references for a given translation
+func (l *Locale) ClearRefs(str string) {
+	l.AddDRefs(l.GetDomain(), str)
+}
+
+// Clear source references for a given translation
+func (l *Locale) ClearDRefs(dom string, str string) {
+	l.Lock()
+	defer l.Unlock()
+
+	if l.Domains == nil {
+		return
+	}
+	translator, ok := l.Domains[dom]
+	if !ok {
+		return
+	}
+
+	translator.GetDomain().ClearRefs(str)
+}
+
+// Clear all source references
+func (l *Locale) ClearAllRefs() {
+	l.ClearDAllRefs(l.GetDomain())
+}
+
+func (l *Locale) ClearDAllRefs(dom string) {
+	l.Lock()
+	defer l.Unlock()
+
+	if l.Domains == nil {
+		return
+	}
+	translator, ok := l.Domains[dom]
+	if !ok {
+		return
+	}
+	translator.GetDomain().ClearAllRefs()
 }
 
 // LocaleEncoding is used as intermediary storage to encode Locale objects to Gob.

@@ -44,6 +44,11 @@ func (t *Translation) IsStale() bool {
 	return !t.dirty
 }
 
+func (t *Translation) SetRefs(refs []string) {
+	t.Refs = refs
+	t.dirty = true
+}
+
 func (t *Translation) hasRef(ref string) bool {
 	for i := 0; i < len(t.Refs); i++ {
 		if ref == t.Refs[i] {
@@ -53,21 +58,18 @@ func (t *Translation) hasRef(ref string) bool {
 	return false
 }
 
-func (t *Translation) SetRefs(refs []string) {
-	if len(t.Refs) > 5 {
-		return
-	}
+func (t *Translation) AddRefs(refs []string) {
 	for i := 0; i < len(refs); i++ {
 		if !t.hasRef(refs[i]) {
 			t.dirty = true
-			if len(t.Refs) == 5 {
-				t.Refs = append(t.Refs, "...")
-				break
-			} else {
-				t.Refs = append(t.Refs, refs[i])
-			}
+			t.Refs = append(t.Refs, refs[i])
 		}
 	}
+}
+
+func (t *Translation) ClearRefs() {
+	clear(t.Refs)
+	t.dirty = true
 }
 
 func (t *Translation) Set(str string) {

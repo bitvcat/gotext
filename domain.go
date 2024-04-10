@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/gob"
 	"fmt"
+	"math"
 	"regexp"
 	"sort"
 	"strconv"
@@ -226,6 +227,47 @@ func (do *Domain) GetRefs(str string) []string {
 		}
 	}
 	return nil
+}
+
+// Add source references for a given translation
+func (do *Domain) AddRefs(str string, refs []string) {
+	do.trMutex.Lock()
+	do.pluralMutex.Lock()
+	defer do.trMutex.Unlock()
+	defer do.pluralMutex.Unlock()
+
+	if trans, ok := do.translations[str]; ok {
+		trans.AddRefs(refs)
+	} else {
+		trans = NewTranslation()
+		trans.ID = str
+		trans.AddRefs(refs)
+		do.translations[str] = trans
+	}
+}
+
+// Clear source references for a given translation
+func (do *Domain) ClearRefs(str string) {
+	do.trMutex.Lock()
+	do.pluralMutex.Lock()
+	defer do.trMutex.Unlock()
+	defer do.pluralMutex.Unlock()
+
+	if trans, ok := do.translations[str]; ok {
+		trans.ClearRefs()
+	}
+}
+
+// Clear all source references
+func (do *Domain) ClearAllRefs() {
+	do.trMutex.Lock()
+	do.pluralMutex.Lock()
+	defer do.trMutex.Unlock()
+	defer do.pluralMutex.Unlock()
+
+	for _, trans := range do.translations {
+		trans.ClearRefs()
+	}
 }
 
 // Set the translation of a given string
@@ -632,7 +674,15 @@ func (do *Domain) MarshalText() ([]byte, error) {
 			buf.WriteString("\n#." + v)
 		}
 		if len(trans.Refs) > 0 {
-			buf.WriteString("\n#: " + strings.Join(trans.Refs, " "))
+			perNum := 5
+			length := len(trans.Refs)
+			refLine := int(math.Ceil(float64(length) / float64(perNum)))
+			for i := 0; i < refLine; i++ {
+				refs := make([]string, 0, perNum)
+				endIdx := min((i+1)*perNum, length)
+				refs = append(refs, trans.Refs[i*perNum:endIdx]...)
+				buf.WriteString("\n#: " + strings.Join(refs, " "))
+			}
 		}
 
 		if len(trans.Flags) > 0 {

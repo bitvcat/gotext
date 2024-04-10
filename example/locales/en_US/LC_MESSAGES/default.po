@@ -27,6 +27,7 @@ msgstr ""
 "hello\n"
 "hi"
 
-#: aaa:123 bbbb:123
+#: aaa:1 bbbb:2 bbbb:3 bbbb:4 bbbb:5
+#: bbbb:6
 msgid "猫"
 msgstr ""

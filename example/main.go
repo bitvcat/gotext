@@ -62,7 +62,7 @@ msgstr "world"
 	fmt.Println("-------------")
 	l := gotext.NewLocale("./locales", "en_US")
 	l.AddDomain("default")
-	l.SetRefs("猫", "aaa:123", "bbbb:123")
+	l.AddRefs("猫", "aaa:1", "bbbb:2", "bbbb:3", "bbbb:4", "bbbb:5", "bbbb:6")
 	l.MarshalPo()
 	fmt.Println(l.Get("世界"))
 }
