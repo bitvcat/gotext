@@ -205,7 +205,7 @@ func (do *Domain) SetRefs(str string, refs []string) {
 	defer do.pluralMutex.Unlock()
 
 	if trans, ok := do.translations[str]; ok {
-		trans.Refs = refs
+		trans.SetRefs(refs)
 	} else {
 		trans = NewTranslation()
 		trans.ID = str
