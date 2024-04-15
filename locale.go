@@ -586,7 +586,7 @@ func (l *Locale) MarshalPoD(dom string) bool {
 	if err != nil {
 		return false
 	}
-	filename := path.Join(l.path, l.lang, "LC_MESSAGES", dom+".po")
+	filename := path.Join(l.GetPath(), dom+".po")
 	err = os.WriteFile(filename, poBytes, 0o644)
 	return err == nil
 }
