@@ -110,6 +110,33 @@ func (l *Locale) findExt(dom, ext string) string {
 	return ""
 }
 
+func (l *Locale) GetPath() string {
+	pathname := path.Join(l.path, l.lang, "LC_MESSAGES")
+	if l.dirExists(pathname) {
+		return pathname
+	}
+
+	if len(l.lang) > 2 {
+		pathname = path.Join(l.path, l.lang[:2], "LC_MESSAGES")
+		if l.dirExists(pathname) {
+			return pathname
+		}
+	}
+
+	pathname = path.Join(l.path, l.lang)
+	if l.dirExists(pathname) {
+		return pathname
+	}
+
+	if len(l.lang) > 2 {
+		pathname = path.Join(l.path, l.lang[:2])
+		if l.dirExists(pathname) {
+			return pathname
+		}
+	}
+	return ""
+}
+
 // GetActualLanguage inspects the filesystem and decides whether to strip
 // a CC part of the ll_CC locale string.
 func (l *Locale) GetActualLanguage(dom string) string {
@@ -151,6 +178,14 @@ func (l *Locale) fileExists(filename string) bool {
 	}
 	_, err := os.Stat(filename)
 	return err == nil
+}
+
+func (l *Locale) dirExists(pathname string) bool {
+	info, err := os.Stat(pathname)
+	if err == nil && info.IsDir() {
+		return true
+	}
+	return false
 }
 
 // AddDomain creates a new domain for a given locale object and initializes the Po object.
