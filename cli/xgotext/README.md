@@ -5,7 +5,7 @@ CLI tool to extract translation strings from Go packages into .POT files.
 ## Installation
 
 ```
-go install github.com/bitvcat/gotext/cli/xgotext
+go install github.com/ibitcat/gotext/cli/xgotext
 ```
 
 ## Usage

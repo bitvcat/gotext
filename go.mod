@@ -1,4 +1,4 @@
-module github.com/bitvcat/gotext
+module github.com/ibitcat/gotext
 
 // go: no requirements found in Gopkg.lock
 

@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/bitvcat/gotext/cli/xgotext/parser"
+	"github.com/ibitcat/gotext/cli/xgotext/parser"
 )
 
 func TestParsePkgTree(t *testing.T) {

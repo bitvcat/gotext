@@ -30,13 +30,13 @@
 
 # Documentation
 
-Refer to the Godoc package documentation at (https://godoc.org/github.com/bitvcat/gotext)
+Refer to the Godoc package documentation at (https://godoc.org/github.com/ibitcat/gotext)
 
 
 # Installation
 
 ```
-go get github.com/bitvcat/gotext
+go get github.com/ibitcat/gotext
 ```
 
 - There are no requirements or dependencies to use this package.
@@ -50,17 +50,17 @@ Stable releases use [semantic versioning](http://semver.org/spec/v2.0.0.html) ta
 
 You can rely on this to use your preferred vendoring tool or to manually retrieve the corresponding release tag from the GitHub repository.
 
-**NOTE:** v1.5.0 contains a breaking change on how `Po` objects are initialised, see (https://github.com/bitvcat/gotext/issues/56)
+**NOTE:** v1.5.0 contains a breaking change on how `Po` objects are initialised, see (https://github.com/ibitcat/gotext/issues/56)
 
 
 ### Vendoring with [Go Modules](https://github.com/golang/go/wiki/Modules) (Recommended)
 
-Add `github.com/bitvcat/gotext` inside the  `require` section in your `go.mod` file.
+Add `github.com/ibitcat/gotext` inside the  `require` section in your `go.mod` file.
 
 i.e.
 ```
 require (
-    github.com/bitvcat/gotext v1.4.0
+    github.com/ibitcat/gotext v1.4.0
 )
 ```
 
@@ -137,7 +137,7 @@ For quick/simple translations you can use the package level functions directly.
 ```go
 import (
     "fmt"
-    "github.com/bitvcat/gotext"
+    "github.com/ibitcat/gotext"
 )
 
 func main() {
@@ -161,7 +161,7 @@ Use the fmt.Printf syntax (from Go's "fmt" package) to specify how to print the 
 ```go
 import (
     "fmt"
-    "github.com/bitvcat/gotext"
+    "github.com/ibitcat/gotext"
 )
 
 func main() {
@@ -186,7 +186,7 @@ so you can handle each settings on their own.
 ```go
 import (
     "fmt"
-    "github.com/bitvcat/gotext"
+    "github.com/ibitcat/gotext"
 )
 
 func main() {
@@ -223,7 +223,7 @@ you can directly use the Po object to parse it and access the translations in th
 ```go
 import (
     "fmt"
-    "github.com/bitvcat/gotext"
+    "github.com/ibitcat/gotext"
 )
 
 func main() {
@@ -257,7 +257,7 @@ as defined in (https://www.gnu.org/savannah-checkouts/gnu/gettext/manual/html_no
 ```go
 import (
     "fmt"
-    "github.com/bitvcat/gotext"
+    "github.com/ibitcat/gotext"
 )
 
 func main() {

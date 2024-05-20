@@ -11,7 +11,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/bitvcat/gotext/plurals"
+	"github.com/ibitcat/gotext/plurals"
 )
 
 // Domain has all the common functions for dealing with a gettext domain

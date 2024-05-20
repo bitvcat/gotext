@@ -21,7 +21,7 @@ Example:
 
 	import (
 		"fmt"
-		"github.com/bitvcat/gotext"
+		"github.com/ibitcat/gotext"
 	)
 
 	func main() {

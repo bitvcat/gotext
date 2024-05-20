@@ -11,7 +11,7 @@ import (
 
 	"golang.org/x/tools/go/packages"
 
-	"github.com/bitvcat/gotext/cli/xgotext/parser"
+	"github.com/ibitcat/gotext/cli/xgotext/parser"
 )
 
 // GetterDef describes a getter
@@ -167,7 +167,7 @@ func (g *GoFile) checkType(rawType types.Type) bool {
 		return g.checkType(t.Elem())
 
 	case *types.Named:
-		if t.Obj().Pkg() == nil || t.Obj().Pkg().Path() != "github.com/bitvcat/gotext" {
+		if t.Obj().Pkg() == nil || t.Obj().Pkg().Path() != "github.com/ibitcat/gotext" {
 			return false
 		}
 	default:
@@ -189,7 +189,7 @@ func (g *GoFile) inspectCallExpr(n *ast.CallExpr) {
 		// object is a package if the Obj is not set
 		if e.Obj == nil {
 			pkg, ok := g.importedPackages[e.Name]
-			if !ok || pkg.PkgPath != "github.com/bitvcat/gotext" {
+			if !ok || pkg.PkgPath != "github.com/ibitcat/gotext" {
 				return
 			}
 

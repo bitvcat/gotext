@@ -1,6 +1,6 @@
 package pkg
 
-import "github.com/bitvcat/gotext"
+import "github.com/ibitcat/gotext"
 
 type SubTranslate struct {
 	L gotext.Locale

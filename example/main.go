@@ -5,7 +5,7 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/bitvcat/gotext"
+	"github.com/ibitcat/gotext"
 )
 
 func main() {

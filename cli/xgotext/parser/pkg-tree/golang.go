@@ -13,10 +13,10 @@ import (
 
 	"golang.org/x/tools/go/packages"
 
-	"github.com/bitvcat/gotext/cli/xgotext/parser"
+	"github.com/ibitcat/gotext/cli/xgotext/parser"
 )
 
-const gotextPkgPath = "github.com/bitvcat/gotext"
+const gotextPkgPath = "github.com/ibitcat/gotext"
 
 type GetterDef struct {
 	Id      int
